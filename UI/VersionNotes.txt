@@ -1,2 +1,2 @@
-﻿TRPv0
-	-Initial release
+﻿TRPv1.0.1
+	-Fixed null pointer when a building have no props

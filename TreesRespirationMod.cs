@@ -14,7 +14,7 @@ using System.Reflection;
 using UnityEngine;
 using static Klyte.TreesRespiration.TextureAtlas.TRPCommonTextureAtlas;
 
-[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.1.2")]
 namespace Klyte.TreesRespiration
 {
     public class TreesRespirationMod : BasicIUserMod<TreesRespirationMod, TRPResourceLoader, MonoBehaviour, TRPCommonTextureAtlas, UICustomControl, SpriteNames>
@@ -62,7 +62,7 @@ namespace Klyte.TreesRespiration
                 return;
             }
 
-            uint frameIdx = SimulationManager.instance.m_currentFrameIndex;
+            uint frameIdx = SimulationManager.instance.m_currentTickIndex;
             for (uint i = frameIdx % 2048; i < __instance.m_trees.m_buffer.Length; i += 2048)
             {
                 if ((__instance.m_trees.m_buffer[i].m_flags & (uint) TreeInstance.Flags.Created) != 0)
@@ -88,7 +88,7 @@ namespace Klyte.TreesRespiration
 
         public static void PostSimulationStepBuilding(ref Building data)
         {
-            if (MultiplierBuildings.value == 0 || data.Info == null)
+            if (MultiplierBuildings.value == 0 || (data.Info?.m_props?.Length ?? 0) == 0)
             {
                 return;
             }
@@ -103,14 +103,14 @@ namespace Klyte.TreesRespiration
         }
         public static void PostSimulationStepNet(ref NetSegment data)
         {
-            if (MultiplierNet.value == 0 || data.Info == null)
+            if (MultiplierNet.value == 0 || data.Info?.m_lanes == null)
             {
                 return;
             }
 
             for (int l = 0; l < data.Info.m_lanes.Length; l++)
             {
-                if (data.Info.m_lanes[l].m_laneProps == null)
+                if (data.Info.m_lanes[l]?.m_laneProps == null)
                 {
                     continue;
                 }
