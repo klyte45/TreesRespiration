@@ -1,2 +1,2 @@
-﻿TRPv1.0.1
-	-Fixed null pointer when a building have no props
+﻿<color #AA44FF>TRv2.0</color>
+	-...

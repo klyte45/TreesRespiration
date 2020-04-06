@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{19B7EAF1-8938-432C-8D6A-7975D27755F2}</ProjectGuid>
+    <ProjectGuid>{3F345C94-8888-454F-8A12-E1EBDAE831F3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Klyte.TreesRespiration</RootNamespace>
+    <RootNamespace>Klyte</RootNamespace>
     <AssemblyName>TreesRespiration</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
@@ -16,7 +16,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -25,10 +25,12 @@
     <ConsolePause>False</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="xcopy /Y &quot;bin\Debug\${ProjectName}.dll&quot; &quot;J:\SteamLibrary\steamapps\workshop\content\255710\524088211\&quot;" workingdir="${ProjectDir}" externalConsole="True" />
+        <Command type="AfterBuild" command="xcopy /Y &quot;bin\Debug\${SolutionName}.dll&quot; &quot;J:\SteamLibrary\steamapps\workshop\content\255710\408875519\&quot;" workingdir="${ProjectDir}" externalConsole="True" />
+        <Command type="AfterBuild" command="xcopy /Y &quot;bin\Debug\UIHelperExtended.dll&quot; &quot;J:\SteamLibrary\steamapps\workshop\content\255710\408875519\&quot;" workingdir="${ProjectDir}" externalConsole="True" />
       </CustomCommands>
     </CustomCommands>
-    <CodeAnalysisRuleSet>..\TransportLinesManager\TransportLinesManager.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>TransportLinesManager.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
@@ -38,18 +40,23 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>False</ConsolePause>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
     <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>TransportLinesManager.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -60,20 +67,45 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="commons\Interfaces\BasicKPanel.cs" />
+    <Compile Include="CommonProperties.cs" />
     <Compile Include="commons\Extensors\Redirector.cs" />
+    <Compile Include="commons\Extensors\UI\CheckboxOrdernatedList.cs" />
     <Compile Include="commons\Extensors\UI\NumberedColorList.cs" />
     <Compile Include="commons\Extensors\UI\TextList.cs" />
     <Compile Include="commons\Extensors\UI\UIHelperExtended.cs" />
     <Compile Include="commons\Extensors\UI\UITabstripAutoResize.cs" />
     <Compile Include="commons\Interfaces\BasicIUserMod.cs" />
-    <Compile Include="commons\Interfaces\TextureAtlasDescriptor.cs" />
-    <Compile Include="commons\TextureAtlas\KCCommonTextureAtlas.cs" />
-    <Compile Include="commons\TextureAtlas\LineUtilsTextureAtlas.cs" />
+    <Compile Include="commons\Interfaces\BasicIUserModSimplified.cs" />
+    <Compile Include="commons\Interfaces\IEnumerableIndex.cs" />
+    <Compile Include="commons\Interfaces\IFontConfigContainer.cs" />
+    <Compile Include="commons\Interfaces\IIdentifiable.cs" />
+    <Compile Include="commons\Interfaces\IController.cs" />
+    <Compile Include="commons\Interfaces\ILibable.cs" />
+    <Compile Include="commons\Interfaces\IPropColorContainer.cs" />
+    <Compile Include="commons\Interfaces\ITimeable.cs" />
+    <Compile Include="commons\Interfaces\IViewStartActions.cs" />
+    <Compile Include="commons\Interfaces\Warehouse\BasicSingletonSerializableDataExtension.cs" />
+    <Compile Include="commons\Interfaces\Warehouse\ConfigWarehouseBase.cs" />
+    <Compile Include="commons\Interfaces\Warehouse\ExtensionInterface2LevelIntImpl.cs" />
+    <Compile Include="commons\Interfaces\Warehouse\ExtensionInterfaceDictionaryByEnumImpl.cs" />
+    <Compile Include="commons\Interfaces\Warehouse\ExtensionInterfaceDictionaryByUintImpl.cs" />
+    <Compile Include="commons\Interfaces\Warehouse\ExtensionInterfaceDictionaryStructValSimplImpl.cs" />
+    <Compile Include="commons\Interfaces\Warehouse\ExtensionInterfaceListImpl .cs" />
+    <Compile Include="commons\Interfaces\Warehouse\ExtensionInterfaceSingleImpl.cs" />
+    <Compile Include="commons\Interfaces\Warehouse\ExtensorContainer.cs" />
+    <Compile Include="commons\Redirectors\UIViewRedirector.cs" />
+    <Compile Include="commons\Redirectors\UIDynamicPanelsRedirector.cs" />
+    <Compile Include="commons\Redirectors\UIDynamicFontRendererRedirector.cs" />
+    <Compile Include="commons\Tools\BasicBuildingTool.cs" />
     <Compile Include="commons\Tools\BasicNetTool.cs" />
     <Compile Include="commons\UI\AVOPreviewRenderer.cs" />
     <Compile Include="commons\UI\i18n\KlyteLocaleManager.cs" />
+    <Compile Include="commons\UI\SpriteNames\CommonsSpriteNames.cs" />
+    <Compile Include="commons\UI\SpriteNames\LineIconSpriteNames.cs" />
     <Compile Include="commons\UI\TLMAgesChartPanel.cs" />
     <Compile Include="commons\UI\TLMWorkersChartPanel.cs" />
+    <Compile Include="commons\UI\K45DialogControl.cs" />
     <Compile Include="commons\UI\UIRadialChartExtended.cs" />
     <Compile Include="commons\Utils\BuildingUtils.cs" />
     <Compile Include="commons\Utils\DistrictUtils.cs" />
@@ -81,11 +113,13 @@
     <Compile Include="commons\Utils\GeneralUtils.cs" />
     <Compile Include="commons\Utils\KlyteMathUtils.cs" />
     <Compile Include="commons\Utils\KlyteMonoUtils.cs" />
+    <Compile Include="commons\Utils\KlyteResourceLoader.cs" />
     <Compile Include="commons\Utils\LogUtils.cs" />
     <Compile Include="commons\Utils\MapUtils.cs" />
     <Compile Include="commons\Utils\NumberingUtils.cs" />
+    <Compile Include="commons\Utils\PastelConfig.cs" />
+    <Compile Include="commons\Utils\RandomPastelColorGenerator.cs" />
     <Compile Include="commons\Utils\ReflectionUtils.cs" />
-    <Compile Include="commons\Utils\ResourceLoader.cs" />
     <Compile Include="commons\Utils\RoadSearchUtils.cs" />
     <Compile Include="commons\Utils\SegmentUtils.cs" />
     <Compile Include="commons\Utils\SerializationUtils.cs" />
@@ -94,86 +128,206 @@
     <Compile Include="commons\Utils\StructExtensions\ColorExtensions.cs" />
     <Compile Include="commons\Utils\StructExtensions\Int32Extensions.cs" />
     <Compile Include="commons\Utils\StructExtensions\NetSegmentExtensions.cs" />
+    <Compile Include="commons\Utils\StructExtensions\PathUnitExtensions.cs" />
     <Compile Include="commons\Utils\StructExtensions\Vector2Extensions.cs" />
     <Compile Include="commons\Utils\StructExtensions\Vector3Extensions.cs" />
+    <Compile Include="commons\Utils\TabCommons.cs" />
+    <Compile Include="commons\Utils\TextureAtlasUtils.cs" />
+    <Compile Include="commons\Utils\TextureRenderUtils.cs" />
+    <Compile Include="commons\Utils\TextureScaler.cs" />
     <Compile Include="commons\Utils\UtilitiesClasses\CardinalPoint .cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\ColorList.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\EntryStructValueContainerStructVal.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\LibableList.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\NonSequentialList.cs" />
     <Compile Include="commons\Utils\UtilitiesClasses\NumberArrays.cs" />
     <Compile Include="commons\Utils\UtilitiesClasses\Range.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\SimpleEnumerableList.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\SimpleXmlDictionary.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\SimpleNonSequentialList.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\SimpleXmlDictionaryStructVal.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\SimpleXmlHashSet.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\SimpleXmlList.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\TimeableList.cs" />
+    <Compile Include="commons\Utils\UtilitiesClasses\MutableTuple.cs" />
     <Compile Include="commons\Utils\UtilitiesClasses\Tuple.cs" />
     <Compile Include="commons\Utils\VehicleUtils.cs" />
     <Compile Include="commons\Utils\XmlUtils.cs" />
-    <Compile Include="TextureAtlas\TBRCommonTextureAtlas.cs" />
-    <Compile Include="CommonProperties.cs" />
+    <Compile Include="TRController.cs" />
     <Compile Include="TreesRespirationMod.cs" />
-    <Compile Include="Utils\TRPResourceLoader.cs" />
+    <Compile Include="TRPanel.cs" />
   </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <NameConventionPolicy>
+            <Rules>
+              <NamingRule Name="Namespaces" AffectedEntity="Namespace" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Types" AffectedEntity="Class, Struct, Enum, Delegate" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Interfaces" AffectedEntity="Interface" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredPrefixes>
+                  <String>I</String>
+                </RequiredPrefixes>
+              </NamingRule>
+              <NamingRule Name="Attributes" AffectedEntity="CustomAttributes" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredSuffixes>
+                  <String>Attribute</String>
+                </RequiredSuffixes>
+              </NamingRule>
+              <NamingRule Name="Event Arguments" AffectedEntity="CustomEventArgs" VisibilityMask="Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredSuffixes>
+                  <String>EventArgs</String>
+                </RequiredSuffixes>
+              </NamingRule>
+              <NamingRule Name="Exceptions" AffectedEntity="CustomExceptions" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredSuffixes>
+                  <String>Exception</String>
+                </RequiredSuffixes>
+              </NamingRule>
+              <NamingRule Name="Methods" AffectedEntity="Methods" VisibilityMask="Protected, Public" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Static Readonly Fields" AffectedEntity="ReadonlyField" VisibilityMask="Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="False" IncludeStaticEntities="True" />
+              <NamingRule Name="Fields" AffectedEntity="Field" VisibilityMask="Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="ReadOnly Fields" AffectedEntity="ReadonlyField" VisibilityMask="Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="False" />
+              <NamingRule Name="Constant Fields" AffectedEntity="ConstantField" VisibilityMask="Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Properties" AffectedEntity="Property" VisibilityMask="Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Events" AffectedEntity="Event" VisibilityMask="Protected, Public" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Enum Members" AffectedEntity="EnumMember" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Parameters" AffectedEntity="Parameter" VisibilityMask="VisibilityMask" NamingStyle="CamelCase" IncludeInstanceMembers="True" IncludeStaticEntities="True" />
+              <NamingRule Name="Type Parameters" AffectedEntity="TypeParameter" VisibilityMask="VisibilityMask" NamingStyle="PascalCase" IncludeInstanceMembers="True" IncludeStaticEntities="True">
+                <RequiredPrefixes>
+                  <String>T</String>
+                </RequiredPrefixes>
+              </NamingRule>
+            </Rules>
+          </NameConventionPolicy>
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
   <ItemGroup>
     <EmbeddedResource Include="UI\i18n\en.properties" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="UI\i18n\pt.properties" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UI\Images\sprites.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="commons\UI\Images\lineFormat.png" />
-    <Content Include="commons\UI\Images\lineFormat.psd" />
-    <Content Include="commons\UI\Images\sprites.png" />
-    <Content Include="commons\UI\Images\sprites.psd" />
-    <Content Include="commons\UI\VersionNotes.txt" />
-    <Content Include="UI\Images\sprites.psd" />
     <EmbeddedResource Include="UI\VersionNotes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="0Harmony, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Lib.Harmony.1.2.0.1\lib\net35\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>A:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>A:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="ColossalManaged">
-      <HintPath>A:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
-    </Reference>
-    <Reference Include="ICities">
-      <HintPath>A:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL" />
-    <Reference Include="PopsApiWrapper">
-      <HintPath>A:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\PopsApiWrapper.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>A:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>A:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>A:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="commons\README.md" />
     <EmbeddedResource Include="commons\UI\i18n\en.properties" />
     <EmbeddedResource Include="commons\UI\i18n\fr.properties" />
     <EmbeddedResource Include="commons\UI\i18n\pt.properties" />
     <EmbeddedResource Include="commons\UI\i18n\ru.properties" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\Images\%25K45_TR_Icon.png" />
+    <Content Include="UI\Images\sprites.psd" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_24hLineIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_AbsoluteMode.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_AutoColorIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_AutoNameIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_CameraIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_CircleIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_ConeIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_Copy.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_CrossIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_DepotIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_DiamondIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_FontIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_HeptagonIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_HexagonIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_K45Button.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_K45ButtonDisabled.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_K45ButtonFocused.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_K45ButtonHovered.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_Load.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_MapIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_MenuPanel_color.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_MountainIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_OctagonIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_OvalIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_ParachuteIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_Paste.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_PentagonIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_PerHourIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_RelativeMode.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_Reload.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_RemoveIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_RemoveUnwantedIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_RoundedHexagonIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_RoundedPentagonIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_RoundedSquareIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_RoundedTriangleIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_S03StarIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_S04StarIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_S05StarIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_S06StarIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_S07StarIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_S08StarIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_S09StarIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_S10StarIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_Save.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_SquareIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_TrapezeIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\%25K45_TriangleIcon.png" />
+    <EmbeddedResource Include="commons\UI\Images\bordersDescriptor.txt" />
+    <Content Include="commons\UI\Images\lineFormats.psd" />
+    <Content Include="commons\UI\Images\sprites.psd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Lib.Harmony.1.2.0.1\lib\net35\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="ColossalManaged, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
+    </Reference>
+    <Reference Include="ICities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>S:\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\Steam\SteamApps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="Utils\" />
+  </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\_requiredDLLs"
-xcopy /Y "$(TargetDir)0Harmony.dll" "$(ProjectDir)\_requiredDLLs\"
-xcopy /Y "$(ProjectDir)\_requiredDLLs\*" "S:\Steam\steamapps\workshop\content\255710\1803209875"
-xcopy /Y "$(ProjectDir)\_requiredDLLs\*" "C:\Users\Leandro\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\TRP\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)0Harmony.dll" "$(ProjectDir)\_requiredDLLs\"
+xcopy /Y "$(TargetPath)" "$(ProjectDir)\_requiredDLLs\"
+xcopy /Y "$(ProjectDir)\_requiredDLLs\*" "S:\Steam\steamapps\workshop\content\255710\1803209875\"
+
+xcopy /Y "$(ProjectDir)\_requiredDLLs\*" "C:\Users\Leandro\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\TR\"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>del /q "S:\Steam\steamapps\workshop\content\255710\1803209875"
-del /q "$(ProjectDir)\_requiredDLLs"</PreBuildEvent>
+    <PreBuildEvent>del /Q "S:\Steam\steamapps\workshop\content\255710\1803209875\*"
+del /Q  "C:\Users\Leandro\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\TR\*"</PreBuildEvent>
   </PropertyGroup>
 </Project>
