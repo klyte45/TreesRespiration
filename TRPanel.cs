@@ -41,6 +41,7 @@ namespace Klyte.TreesRespiration
             labelAccuracy.minimumSize = new Vector2(PanelWidth - 15, 0);
             labelAccuracy.suffix = (1 << Mathf.RoundToInt(FactorsData.Instance.GetSimulationAccuracy() + 3)).ToString();
             labelAccuracy.parent.tooltip = Locale.Get("K45_TR_SIMULATION_ACCURACY_TOOLTIP");
+            labelAccuracy.wordWrap = false;
             ((UIPanel)(labelAccuracy.parent)).autoLayoutPadding = new RectOffset();
             KlyteMonoUtils.LimitWidthAndBox(labelAccuracy);
         }
@@ -56,6 +57,7 @@ namespace Klyte.TreesRespiration
             slider.width = PanelWidth - 15;
             label.minimumSize = new Vector2(PanelWidth - 15, 0);
             label.suffix = getter().ToString();
+            label.wordWrap = false;
             KlyteMonoUtils.LimitWidthAndBox(label);
             ((UIPanel)(label.parent)).autoLayoutPadding = new RectOffset();
         }

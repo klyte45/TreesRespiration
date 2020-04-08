@@ -1,4 +1,5 @@
 ﻿<color #AA44FF>TRv2.0</color>
-	-<color #FFFF00>New UI in game screen</color> at <sprite K45_K45Button> button.
-	-Added an extra setting for the simulation accuracy (how much objects will be processed in each frame). It will allow a better adaptance in both low or high PC specs.
-	-Removed all code detours from the mod, so <color #FFFF00>it's now full compatible with TM:PE!</color>
+	- <color #FFFF00>New UI in game screen</color> at <sprite K45_K45Button> button.
+	- Added an extra setting for the simulation accuracy (how much objects will be processed in each frame). It will allow a better adaptance in both low or high PC specs.
+	- Removed all code detours from the mod, so <color #FFFF00>it's now full compatible with TM:PE!</color>
+	- Per-savegame configuration
