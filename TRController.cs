@@ -13,7 +13,7 @@ namespace Klyte.TreesRespiration
         public static readonly string FOLDER_NAME = "TreesRespiration";
         public static readonly string FOLDER_PATH = FileUtils.BASE_FOLDER_PATH + FOLDER_NAME;
 
-        public const int MAX_ACCURACY_VALUE = 12;
+        public const int MAX_ACCURACY_VALUE = 9;
 
         private static readonly int[] m_strenghts = new int[] { 0, 1, 2, 4, 8, 16, 32, 64, 128 };
         internal static SavedInt MultiplierTrees { get; } = new SavedInt($"K45_{ CommonProperties.Acronym }_MultiplierTrees", Settings.gameSettingsFile, 0, true);
@@ -27,7 +27,7 @@ namespace Klyte.TreesRespiration
         private uint m_buildingsDivisor;
         private uint m_netsDivisor;
 
-        private uint m_strengthOffset;
+        private int m_strengthOffset;
 
         public void Awake() => UpdateDivisors();
 
@@ -37,7 +37,7 @@ namespace Klyte.TreesRespiration
             m_treesDivisor = FixedMath.GEqualPowerOf2(TreeManager.instance.m_trees.m_size / divisor);
             m_buildingsDivisor = FixedMath.GEqualPowerOf2(BuildingManager.instance.m_buildings.m_size / divisor);
             m_netsDivisor = FixedMath.GEqualPowerOf2(NetManager.instance.m_segments.m_size / divisor);
-            m_strengthOffset = 1u << (MAX_ACCURACY_VALUE - SimulationAccuracy);
+            m_strengthOffset = 1 << (MAX_ACCURACY_VALUE - SimulationAccuracy);
             LogUtils.DoLog($"Items processed per frame = {divisor}");
         }
 
@@ -105,7 +105,7 @@ namespace Klyte.TreesRespiration
                 dimensions = Tuple.New(valuePollution, valueRadius);
                 m_cachedValues[info.name] = dimensions;
             }
-            Singleton<NaturalResourceManager>.instance.TryDumpResource(NaturalResourceManager.Resource.Pollution, (int)(dimensions.First * multiplier * m_strengthOffset / 8), 0, position, dimensions.Second);
+            Singleton<NaturalResourceManager>.instance.TryDumpResource(NaturalResourceManager.Resource.Pollution, (int)Math.Min(int.MaxValue, dimensions.First / 2L * multiplier * m_strengthOffset), 0, position, dimensions.Second);
         }
 
         public void ProcessBuilding(ref Building data)
