@@ -153,6 +153,7 @@
     <Compile Include="commons\Utils\UtilitiesClasses\Tuple.cs" />
     <Compile Include="commons\Utils\VehicleUtils.cs" />
     <Compile Include="commons\Utils\XmlUtils.cs" />
+    <Compile Include="Data\FactorsData.cs" />
     <Compile Include="TRController.cs" />
     <Compile Include="TreesRespirationMod.cs" />
     <Compile Include="TRPanel.cs" />
@@ -317,7 +318,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetDir)0Harmony.dll" "$(ProjectDir)\_requiredDLLs\"

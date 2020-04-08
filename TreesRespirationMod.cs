@@ -9,7 +9,6 @@ namespace Klyte.TreesRespiration
 
         public override string IconName => "K45_TR_Icon";
         public override string SimpleName => "Trees' Respiration";
-
         public override string Description => "Make the trees help cleaning soil pollution";
 
 

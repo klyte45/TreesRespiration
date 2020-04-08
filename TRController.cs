@@ -1,7 +1,7 @@
 ﻿using ColossalFramework;
-using Klyte.Commons;
 using Klyte.Commons.Interfaces;
 using Klyte.Commons.Utils;
+using Klyte.TreesRespiration.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +15,6 @@ namespace Klyte.TreesRespiration
 
         public const int MAX_ACCURACY_VALUE = 9;
 
-        private static readonly int[] m_strenghts = new int[] { 0, 1, 2, 4, 8, 16, 32, 64, 128 };
-        internal static SavedInt MultiplierTrees { get; } = new SavedInt($"K45_{ CommonProperties.Acronym }_MultiplierTrees", Settings.gameSettingsFile, 0, true);
-        internal static SavedInt MultiplierBuildings { get; } = new SavedInt($"K45_{ CommonProperties.Acronym }_MultiplierBuildings", Settings.gameSettingsFile, 0, true);
-        internal static SavedInt MultiplierNet { get; } = new SavedInt($"K45_{ CommonProperties.Acronym }_MultiplierNet", Settings.gameSettingsFile, 0, true);
-        internal static SavedInt SimulationAccuracy { get; } = new SavedInt($"K45_{ CommonProperties.Acronym }_SimulationAccuracy", Settings.gameSettingsFile, 5, true);
-
         private static readonly Dictionary<string, Tuple<int, float>> m_cachedValues = new Dictionary<string, Tuple<int, float>>();
 
         private uint m_treesDivisor;
@@ -33,11 +27,11 @@ namespace Klyte.TreesRespiration
 
         internal void UpdateDivisors()
         {
-            uint divisor = 1u << (Math.Max(1, Math.Min(MAX_ACCURACY_VALUE, SimulationAccuracy)) + 3);
+            uint divisor = 1u << (Math.Max(1, Math.Min(MAX_ACCURACY_VALUE, FactorsData.Instance.GetSimulationAccuracy())) + 3);
             m_treesDivisor = FixedMath.GEqualPowerOf2(TreeManager.instance.m_trees.m_size / divisor);
             m_buildingsDivisor = FixedMath.GEqualPowerOf2(BuildingManager.instance.m_buildings.m_size / divisor);
             m_netsDivisor = FixedMath.GEqualPowerOf2(NetManager.instance.m_segments.m_size / divisor);
-            m_strengthOffset = 1 << (MAX_ACCURACY_VALUE - SimulationAccuracy);
+            m_strengthOffset = 1 << (MAX_ACCURACY_VALUE - FactorsData.Instance.GetSimulationAccuracy());
             LogUtils.DoLog($"Items processed per frame = {divisor}");
         }
 
@@ -53,20 +47,20 @@ namespace Klyte.TreesRespiration
             #region Trees
 
             uint frameIdx = SimulationManager.instance.m_currentTickIndex;
-            if (TRController.MultiplierTrees.value > 0)
+            if (FactorsData.Instance.GetMultiplierTree() > 0)
             {
                 TreeManager __instance = TreeManager.instance;
                 for (uint i = frameIdx % m_treesDivisor; i < __instance.m_trees.m_buffer.Length; i += m_treesDivisor)
                 {
                     if (((TreeInstance.Flags)__instance.m_trees.m_buffer[i].m_flags & SEARCH_FLAGS_TREE) == MATCH_FLAGS_TREE)
                     {
-                        DepolluteTree(__instance.m_trees.m_buffer[i].Info, __instance.m_trees.m_buffer[i].Position, TRController.MultiplierTrees.value);
+                        DepolluteTree(__instance.m_trees.m_buffer[i].Info, __instance.m_trees.m_buffer[i].Position, FactorsData.Instance.GetMultiplierTree());
                     }
                 }
             }
             #endregion
             #region Buildings
-            if (TRController.MultiplierBuildings.value > 0)
+            if (FactorsData.Instance.GetMultiplierBuilding() > 0)
             {
                 BuildingManager __instance = BuildingManager.instance;
                 for (uint i = frameIdx % m_buildingsDivisor; i < __instance.m_buildings.m_buffer.Length; i += m_buildingsDivisor)
@@ -79,7 +73,7 @@ namespace Klyte.TreesRespiration
             }
             #endregion
             #region Nets
-            if (TRController.MultiplierNet.value > 0)
+            if (FactorsData.Instance.GetMultiplierNet() > 0)
             {
                 NetManager __instance = NetManager.instance;
                 for (uint i = frameIdx % m_netsDivisor; i < __instance.m_segments.m_buffer.Length; i += m_netsDivisor)
@@ -119,7 +113,7 @@ namespace Klyte.TreesRespiration
             {
                 if (data.Info.m_props[i]?.m_tree != null)
                 {
-                    DepolluteTree(data.Info.m_props[i].m_tree, data.CalculatePosition(data.Info.m_props[i].m_position), TRController.MultiplierBuildings.value);
+                    DepolluteTree(data.Info.m_props[i].m_tree, data.CalculatePosition(data.Info.m_props[i].m_position), FactorsData.Instance.GetMultiplierBuilding());
                 }
             }
         }
@@ -141,9 +135,9 @@ namespace Klyte.TreesRespiration
                 {
                     if (data.Info.m_lanes[l]?.m_laneProps.m_props[j].m_tree != null)
                     {
-                        DepolluteTree(data.Info.m_lanes[l]?.m_laneProps.m_props[j].m_tree, data.m_middlePosition, TRController.MultiplierNet.value);
-                        DepolluteTree(data.Info.m_lanes[l]?.m_laneProps.m_props[j].m_tree, NetManager.instance.m_nodes.m_buffer[data.m_startNode].m_position, TRController.MultiplierNet.value);
-                        DepolluteTree(data.Info.m_lanes[l]?.m_laneProps.m_props[j].m_tree, NetManager.instance.m_nodes.m_buffer[data.m_endNode].m_position, TRController.MultiplierNet.value);
+                        DepolluteTree(data.Info.m_lanes[l]?.m_laneProps.m_props[j].m_tree, data.m_middlePosition, FactorsData.Instance.GetMultiplierNet());
+                        DepolluteTree(data.Info.m_lanes[l]?.m_laneProps.m_props[j].m_tree, NetManager.instance.m_nodes.m_buffer[data.m_startNode].m_position, FactorsData.Instance.GetMultiplierNet());
+                        DepolluteTree(data.Info.m_lanes[l]?.m_laneProps.m_props[j].m_tree, NetManager.instance.m_nodes.m_buffer[data.m_endNode].m_position, FactorsData.Instance.GetMultiplierNet());
                     }
                 }
             }
