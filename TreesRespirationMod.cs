@@ -1,7 +1,7 @@
 using Klyte.Commons.Interfaces;
 using System.Reflection;
 
-[assembly: AssemblyVersion("2.0.0.1")]
+[assembly: AssemblyVersion("2.0.0.2")]
 namespace Klyte.TreesRespiration
 {
     public class TreesRespirationMod : BasicIUserMod<TreesRespirationMod, TRController, TRPanel>
